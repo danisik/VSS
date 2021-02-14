@@ -165,8 +165,24 @@
 
 
 
+	</div>	
+	
+	<form onsubmit="prisonersDilemma(); return false">
+	
+	<div>
+		<span>Number of algorithms:</span>
+		<input type="number" min="2" step="1" id="selectCount" name="selectCount" value="2" onchange="generateSelects()">
 	</div>
+	
+	<div id="selectDiv" name="selectDiv">
+	</div>
+	
+	<div>
+		<span>Iterations: </span>
+		<input type="number" min="1" step="1" id="algIterations" name="algIterations" value="1">
+	</div>	
 
+	<!--
 	<div class="row col-md-12">
 		<section id="game">
     <h2></h2>
@@ -189,8 +205,9 @@
 	<span>iterations!</span>
 
 	<br>
+	-->
 
-	<button type="submit" onclick="prisonersDilemma()">Submit</button>
+	<button type="submit">Submit</button>
 	</form>
 
 	<table>
@@ -225,7 +242,7 @@
 
 <script src="js/classes.js" type="text/javascript"></script>
 <script src="js/algorithms.js"></script>
-<script src="js/index.js"></script>
+<script src="js/iteration.js"></script>
 </body>
 
 </html>

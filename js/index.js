@@ -49,8 +49,8 @@ function getAlgorithms() {
 
 function prisonersDilemma() {
 	
-	var prisoner1 = new Prisoner(document.getElementById("alg1").value);	
-	var prisoner2 = new Prisoner(document.getElementById("alg2").value);
+	var prisoner1 = new Prisoner(0, document.getElementById("alg1").value);	
+	var prisoner2 = new Prisoner(1, document.getElementById("alg2").value);
 	var iterations = document.getElementById("iterations").value;
 	
 	for (let i = 0; i < iterations; i++) {
@@ -79,6 +79,10 @@ function prisonersDilemma() {
 		
 		prisoner1.history.push(statePrisoner1);
 		prisoner2.history.push(statePrisoner2);
+		
+				console.log("Iteration: " + i);
+		console.log("Prisoner 1: " + prisoner1.score);
+		console.log("Prisoner 2: " + prisoner2.score);
 		
 		setTimeout(function() {
 		console.log("Iteration: " + i);

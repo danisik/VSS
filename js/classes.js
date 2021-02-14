@@ -1,7 +1,8 @@
 class Prisoner {
 	
-  constructor(algorithmName) {
+  constructor(index, algorithmName) {
     this.score = 0;
+	this.name = 'prisoner' + index;
     this.history = [];
     this.algorithmName = algorithmName;
     this.algorithmMethod = window[algorithmName.toUpperCase()];
