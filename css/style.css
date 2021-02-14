@@ -1,0 +1,63 @@
+#content {
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+#strategy-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strategy-separator {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 7px;
+  text-transform: uppercase;
+}
+
+#iterations {
+  max-width: 100px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#vizualize-btn {
+
+}
+
+#game {
+
+
+}
+
+
+
+.result-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+#results {
+  margin: auto;
+   width: 50% !important;
+   text-align: center;
+   font-weight: bold;
+}
+
+
+
+.strategies {
+  max-width: 300px;
+}
+
+.center-content {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
