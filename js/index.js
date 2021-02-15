@@ -1,3 +1,6 @@
+var prisoner1;
+var prisoner2;
+
 prepareAlgorithmsOptions();
 
 function prepareAlgorithmsOptions() {
@@ -49,14 +52,25 @@ function getAlgorithms() {
 
 function prisonersDilemma() {
 	
-	var prisoner1 = new Prisoner(0, document.getElementById("alg1").value);	
-	var prisoner2 = new Prisoner(1, document.getElementById("alg2").value);
+	if (prisoner1 == null || ((prisoner1 != null) && prisoner1.algorithmName != document.getElementById("alg1").value)) {
+		
+		prisoner1 = new Prisoner(0, document.getElementById("alg1").value);	
+	}
+	
+	if (prisoner2 == null || ((prisoner2 != null) && prisoner2.algorithmName != document.getElementById("alg2").value)) { 
+	
+		prisoner2 = new Prisoner(1, document.getElementById("alg2").value);
+	}
+	
 	var iterations = document.getElementById("iterations").value;
+	
+	var tmpHistory1 = [ ];
+	var tmpHistory2 = [ ];
 	
 	for (let i = 0; i < iterations; i++) {
 	
-		var statePrisoner1 = prisoner1.algorithmMethod(prisoner1.history, prisoner2.history);
-		var statePrisoner2 = prisoner2.algorithmMethod(prisoner2.history, prisoner1.history);
+		var statePrisoner1 = prisoner1.algorithmMethod(tmpHistory1, tmpHistory2);
+		var statePrisoner2 = prisoner2.algorithmMethod(tmpHistory2, tmpHistory1);
 		
 		if (statePrisoner1 && statePrisoner2) {
 			
@@ -77,18 +91,29 @@ function prisonersDilemma() {
 			prisoner2.score += statePrisoner2 ? 0 : 3;
 		}
 		
-		prisoner1.history.push(statePrisoner1);
-		prisoner2.history.push(statePrisoner2);
+		tmpHistory1.push(statePrisoner1);
+		tmpHistory2.push(statePrisoner2);
 		
-				console.log("Iteration: " + i);
-		console.log("Prisoner 1: " + prisoner1.score);
-		console.log("Prisoner 2: " + prisoner2.score);
-		
-		setTimeout(function() {
 		console.log("Iteration: " + i);
 		console.log("Prisoner 1: " + prisoner1.score);
 		console.log("Prisoner 2: " + prisoner2.score);
-		}, 100);
 	}
 	
+	// Set history.
+	var oldHistory1 = prisoner1.history.get(prisoner2.name);
+	if (oldHistory1 == null) {
+		
+		oldHistory1 = [ ];
+	}
+	oldHistory1 = oldHistory1.concat(tmpHistory2);
+	
+	var oldHistory2 = prisoner2.history.get(prisoner1.name);
+	if (oldHistory2 == null) {
+		
+		oldHistory2 = [ ];
+	}	
+	oldHistory2 = oldHistory2.concat(tmpHistory1);
+	
+	prisoner1.history.set(prisoner2.name, oldHistory1);
+	prisoner2.history.set(prisoner1.name, oldHistory2);
 }

@@ -86,7 +86,7 @@ function prisonersDilemma() {
 	
 	var iterations = document.getElementById("algIterations").value;
 	
-	// TODO: do it better
+	// TODO: create prisoners same as in index (if there is no change, then dont create no new prisoners).
 	// Create prisoners.
 	for (let i = 0; i < list.length; i++) {
 		
@@ -109,19 +109,26 @@ function prisonersDilemma() {
 	for (let i = 0; i < list.length; i++) {
 		
 		console.log("Prisoner " +  (i + 1) + " [" + list[i].value + "]: \t" + prisoners[i].score);
+		
+		prisoners[i].history.forEach((value, key) => {
+			
+			console.log(key, value)
+		})
 	}
 }
 
 function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations) {
 
-
 	var tmpScore1 = 0;
 	var tmpScore2 = 0;
 	
+	var tmpHistory1 = [ ];
+	var tmpHistory2 = [ ];
+	
 	for (let i = 0; i < iterations; i++) {
 	
-		var statePrisoner1 = prisoner1.algorithmMethod(prisoner1.history, prisoner2.history);
-		var statePrisoner2 = prisoner2.algorithmMethod(prisoner2.history, prisoner1.history);
+		var statePrisoner1 = prisoner1.algorithmMethod(tmpHistory1, tmpHistory2);
+		var statePrisoner2 = prisoner2.algorithmMethod(tmpHistory2, tmpHistory1);
 		
 		if (statePrisoner1 && statePrisoner2) {
 			
@@ -142,22 +149,32 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations) {
 			tmpScore2 += statePrisoner2 ? 0 : 3;
 		}
 		
-		prisoner1.history.push(statePrisoner1);
-		prisoner2.history.push(statePrisoner2);
+		tmpHistory1.push(statePrisoner1);
+		tmpHistory2.push(statePrisoner2);
 		
 		console.log("\tIteration: " + i);
 		console.log("\t\tPrisoner 1: " + tmpScore1);
 		console.log("\t\tPrisoner 2: " + tmpScore2);
 	}
 	
-	// TEMPORARY:
-	// pamatování si minulých her s protivníkem – na základě toho při výpočtu rozhodnutí, 
-	// může pozměnit svoje rozhodnutí (bude to něco jako rušení, ale pravděpodobnost na 
-	// změnu se bude vypočítávat na základě toho kolikrát mě ne/podrazil v minulých hrách)
-	// -> mapa se jménem protivníka jako klíč a historie jako hodnota
-	prisoner1.history = [ ];
+	// Set history.
+	var oldHistory1 = prisoner1.history.get(prisoner2.name);
+	if (oldHistory1 == null) {
+		
+		oldHistory1 = [ ];
+	}
+	oldHistory1 = oldHistory1.concat(tmpHistory2);
+	
+	var oldHistory2 = prisoner2.history.get(prisoner1.name);
+	if (oldHistory2 == null) {
+		
+		oldHistory2 = [ ];
+	}	
+	oldHistory2 = oldHistory2.concat(tmpHistory1);
+	
+	prisoner1.history.set(prisoner2.name, oldHistory1);
 	prisoner1.score += tmpScore1;
 	
-	prisoner2.history = [ ];
+	prisoner2.history.set(prisoner1.name, oldHistory2);
 	prisoner2.score += tmpScore2;
 }
