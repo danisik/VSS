@@ -67,16 +67,41 @@ function prisonersDilemma() {
 	var tmpHistory1 = [ ];
 	var tmpHistory2 = [ ];
 	
+	var P1P2HistoryCount = prisoner1.history.has(prisoner2.name) ? prisoner1.history.get(prisoner2.name).length : 0;
+	var P1BetraysP2Count = prisoner2.getTypeCount(prisoner1.name, true);		
+	var P2BetraysP1Count = prisoner1.getTypeCount(prisoner2.name, true);
+	
 	for (let i = 0; i < iterations; i++) {
 	
 		var statePrisoner1 = prisoner1.algorithmMethod(tmpHistory1, tmpHistory2);
 		var statePrisoner2 = prisoner2.algorithmMethod(tmpHistory2, tmpHistory1);
 		
+		if (P1P2HistoryCount >= 10) {
+			
+			var probabilityBetrayP1P2 = (P1BetraysP2Count / P1P2HistoryCount).toFixed(2);
+			var probabilityBetrayP2P1 = (P2BetraysP1Count / P1P2HistoryCount).toFixed(2);
+			
+			if (!statePrisoner1 && changeState(probabilityBetrayP2P1)) {
+				
+				statePrisoner1 = true;
+			}
+			
+			if (!statePrisoner2 && changeState(probabilityBetrayP1P2)) {
+				
+				statePrisoner2 = true;
+			}
+		}
+		
+		// True - cooperate with police, betray the other prisoner.
+		// False - do not cooperate with police.
 		if (statePrisoner1 && statePrisoner2) {
 			
 			// If A and B each betray the other, each of them serves two years in prison.
 			prisoner1.score += 2;
 			prisoner2.score += 2;
+			
+						P1BetraysP2Count++;
+			P2BetraysP1Count++;
 			
 		} else if (!statePrisoner1 && !statePrisoner2){
 			
@@ -86,17 +111,34 @@ function prisonersDilemma() {
 			
 		} else {
 				
-			// If A betrays B but B remains silent, A will be set free and B will serve three years in prison (and vice versa)
-			prisoner1.score += statePrisoner1 ? 0 : 3;
-			prisoner2.score += statePrisoner2 ? 0 : 3;
+			// If A betrays B but B remains silent, A will be set free and B will serve three years in prison (and vice versa)			
+			if (statePrisoner1) {
+				
+				P1BetraysP2Count++;
+				
+			} else {
+				
+				prisoner1.score += 3;
+			}
+			
+			if (statePrisoner2) {
+				
+				P2BetraysP1Count++;
+				
+			} else {
+				
+				prisoner2.score += 3;
+			}
 		}
+		
+		P1P2HistoryCount++;
 		
 		tmpHistory1.push(statePrisoner1);
 		tmpHistory2.push(statePrisoner2);
 		
-		console.log("Iteration: " + i);
-		console.log("Prisoner 1: " + prisoner1.score);
-		console.log("Prisoner 2: " + prisoner2.score);
+		console.log("\tIteration: " + (i + 1));
+		console.log("\t\tPrisoner 1: " + prisoner1.score);
+		console.log("\t\tPrisoner 2: " + prisoner2.score);
 	}
 	
 	// Set history.
