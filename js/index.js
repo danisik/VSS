@@ -49,13 +49,16 @@ function getAlgorithms() {
 
 function prisonersDilemma() {
 
+	console.clear();
+	
 	var prisoner1 = new Prisoner(0, document.getElementById("alg1").value);	
 	var prisoner2 = new Prisoner(1, document.getElementById("alg2").value);
 	
-	var iterations = document.getElementById("iterations").value;
+	var iterations = document.getElementById("algIterations").value;
 	
 	var tmpHistory1 = [ ];
 	var tmpHistory2 = [ ];
+
 	
 	for (let i = 0; i < iterations; i++) {
 	

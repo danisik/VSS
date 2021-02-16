@@ -171,7 +171,7 @@
 		<section id="game">
     <h2></h2>
 
-	<form action="#game">
+	<form onsubmit="prisonersDilemma(); return false">
 	<span>Let</span>
 	<div>
 	  <select id="alg1" name="alg1"></select>
@@ -184,13 +184,13 @@
 	<span>for</span>
 
 	<div>
-	  <input type="number" min="1" step="1" id="iterations" name="iterations" value="1">
+	  <input type="number" min="1" step="1" id="algIterations" name="algIterations" value="1">
 	</div>
 	<span>iterations!</span>
 
 	<br>
 
-	<button type="submit" onclick="prisonersDilemma()">Submit</button>
+	<button type="submit">Submit</button>
 	</form>
 
 	<table>
