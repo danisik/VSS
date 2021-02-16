@@ -6,8 +6,11 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-grid.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/Chart.min.css">
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+	<script type="text/javascript" src="js/Chart.min.js"></script>
 
 
 
@@ -34,153 +37,121 @@
 	<div id="content">
 		<h3>Iteration</h3>
 		<div class="form-group">
-			<div id="strategy-select">
-				<select class="form-control strategies">
-						<option value="ALLC" selected>ALLC</option>
-						<option value="ALLD">ALLD</option>
-						<option value="ALT">ALT</option>
-						<option value="APP">APP</option>
-						<option value="CPAVG">CPAVG</option>
-						<option value="GRIM">GRIM</option>
-						<option value="PAV">PAV</option>
-						<option value="RAND">RAND</option>
-						<option value="TFT">TFT</option>
-						<option value="TFTT">TFTT</option>
-						<option value="TTFT">ALT</TTFT>
-				</select>
+			<div id="iteration-settings">
+				<div class="iteration-strategy">
+					<select class="form-control">
+							<option value="ALLC" selected>ALLC</option>
+							<option value="ALLD">ALLD</option>
+							<option value="ALT">ALT</option>
+							<option value="APP">APP</option>
+							<option value="CPAVG">CPAVG</option>
+							<option value="GRIM">GRIM</option>
+							<option value="PAV">PAV</option>
+							<option value="RAND">RAND</option>
+							<option value="TFT">TFT</option>
+							<option value="TFTT">TFTT</option>
+							<option value="TTFT">ALT</TTFT>
+					</select>
+				</div>
 
-				<span class="strategy-separator">
-					VS
-				</span>
+				<div class="iteration-strategy">
+					<select class="form-control">
+							<option value="ALLC" selected>ALLC</option>
+							<option value="ALLD">ALLD</option>
+							<option value="ALT">ALT</option>
+							<option value="APP">APP</option>
+							<option value="CPAVG">CPAVG</option>
+							<option value="GRIM">GRIM</option>
+							<option value="PAV">PAV</option>
+							<option value="RAND">RAND</option>
+							<option value="TFT">TFT</option>
+							<option value="TFTT">TFTT</option>
+							<option value="TTFT">ALT</TTFT>
+					</select>
+				</div>
 
-				<select class="form-control strategies" aria-label="Default select example">
-						<option value="ALLC" selected>ALLC</option>
-						<option value="ALLD">ALLD</option>
-						<option value="ALT">ALT</option>
-						<option value="APP">APP</option>
-						<option value="CPAVG">CPAVG</option>
-						<option value="GRIM">GRIM</option>
-						<option value="PAV">PAV</option>
-						<option value="RAND">RAND</option>
-						<option value="TFT">TFT</option>
-						<option value="TFTT">TFTT</option>
-						<option value="TTFT">ALT</TTFT>
-				</select>
+				<div class="iteration-strategy">
+					<select class="form-control">
+							<option value="ALLC" selected>ALLC</option>
+							<option value="ALLD">ALLD</option>
+							<option value="ALT">ALT</option>
+							<option value="APP">APP</option>
+							<option value="CPAVG">CPAVG</option>
+							<option value="GRIM">GRIM</option>
+							<option value="PAV">PAV</option>
+							<option value="RAND">RAND</option>
+							<option value="TFT">TFT</option>
+							<option value="TFTT">TFTT</option>
+							<option value="TTFT">ALT</TTFT>
+					</select>
+					<button type="button" class="btn btn-danger delete-btn">x</button>
+				</div>
+		</div>
+
+		<div class="center-content">
+			<span id="add-strategy-btn">+</span>
+		</div>
+
+
+		<div class="center-content">
+			<div class="settings-block">
+
+				<div class="input-pair">
+					<span class="label">Iterations:</span>
+					<input class="form-control iterations-iteration" type="number" value="1" min="1" step="1" id="iterations" name="iterations">
+				</div>
+
+				<div class="input-pair">
+					<span class="label">Interference:</span>
+					<input class="form-control" type="number" value="0" min="0" step="0.1" id="inteference" name="interference">
+				</div>
+
+				<div class="input-pair">
+					<span class="label">Mutation:</span>
+					<input class="" type="checkbox" id="mutation" name="mutation">
+				</div>
+
+				<div class="input-pair">
+					<span class="label">Remember&nbsp;history:</span>
+					<input class="" type="checkbox" id="history" name="history">
+				</div>
+
+				<div class="input-pair">
+					<span class="label">Speed:</span>
+					<select class="form-control" id="speed" name="speed">
+							<option value="0" selected>Slow</option>
+							<option value="1">Medium</option>
+							<option value="2">Fast</option>
+					</select>
+				</div>
+
+				<button type="button" class="btn btn-primary" id="vizualize-btn">Vizualize!</button>
 			</div>
 
-			<div class="center-content">
-					<span>Iterations:</span>
-					<input class="form-control" type="number" value="1" min="1" step="1" id="iterations" name="iterations">
 
-					<button type="button" class="btn btn-primary" id="vizualize-btn">Vizualize!</button>
 			</div>
 
 		</div>
 
 
 
-		<div id="game">
-			<table class="table" id="results">
-					<thead>
-						<tr>
-							<th scope="col">Iteration</th>
-							<th scope="col">
-									<span id="alg1-name">ALLC</span>
-							</th>
-							<th scope="col">
-									<span id="alg2-name">ALLC</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>
-								<span>
-									0
-									<img class="result-img" src="img/bro.png" />
-									+3
-								</span>
-							</td>
-							<td>
-									<span>
-									0
-									<img class="result-img" src="img/snitch.png" />
-									+5
-									</span>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>
-								<span>
-									0
-									<img class="result-img" src="img/bro.png" />
-									+3
-								</span>
-							</td>
-							<td>
-									<span>
-									0
-									<img class="result-img" src="img/snitch.png" />
-									+5
-									</span>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>
-								<span>
-									0
-									<img class="result-img" src="img/bro.png" />
-									+3
-								</span>
-							</td>
-							<td>
-									<span>
-									0
-									<img class="result-img" src="img/snitch.png" />
-									+5
-									</span>
-							</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<th>Score:</th>
-							<td>
-								<span id="alg1-score">0</span>
-							</td>
-							<td>
-								<span id="alg2-score">0</span>
-							</td>
-						</tr>
-					</tfoot>
-			</table>
 
-		</div>
+	</div>
 
-
-
-
-
-
-	</div>	
-	
 	<form onsubmit="prisonersDilemma(); return false">
-	
+
 	<div>
 		<span>Number of algorithms:</span>
 		<input type="number" min="2" step="1" id="selectCount" name="selectCount" value="2" onchange="generateSelects()">
 	</div>
-	
+
 	<div id="selectDiv" name="selectDiv">
 	</div>
-	
+
 	<div>
 		<span>Iterations: </span>
 		<input type="number" min="1" step="1" id="algIterations" name="algIterations" value="1">
-	</div>	
+	</div>
 
 	<!--
 	<div class="row col-md-12">
@@ -237,6 +208,56 @@
 
 </section>
 	</div>
+
+
+<div class="chart">
+<canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
+
+<script>
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['ALLC', 'TFT', 'RAND'],
+        datasets: [{
+            label: 'Nadpis',
+            data: [12, 19, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+setTimeout(function () {
+	myChart.data.datasets[0].data = [20, 5, 14];
+
+		myChart.update();
+
+}, 2000);
+
+
+</script>
+
 
 
 
