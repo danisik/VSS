@@ -19,7 +19,7 @@ o princip – každý s každým, počítá se celkové skóre, ten kdo má nejv
   - pamatování si minulých her s protivníkem – na základě toho při výpočtu
 rozhodnutí, může pozměnit svoje rozhodnutí (bude to něco jako rušení, ale
 pravděpodobnost na změnu se bude vypočítávat na základě toho kolikrát mě
-ne/podrazil v minulých hrách) - HISTORIE HOTOVÁ, CHYBÍ IMPLEMENTOVAT PRAVDĚPODOBNOST
+ne/podrazil v minulých hrách) - HOTOVO
 
 
 - Možnost spuštění na N iterací, v případě mutací možnost spuštění do té doby, dokud to
