@@ -13,7 +13,7 @@ o princip – každý s každým, počítá se celkové skóre, ten kdo má nejv
 
 
 - možné modifikace
-  - faktor rušení s X pravděpodobností
+  - faktor rušení s X pravděpodobností - HOTOVO
   - jak rychle to bude probíhat
   - mutace – nejsilnější se rozmnoží a zabije nejslabšího
   - pamatování si minulých her s protivníkem – na základě toho při výpočtu

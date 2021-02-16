@@ -85,6 +85,7 @@ function prisonersDilemma() {
 	
 	var selectsCount = document.getElementById('selectCount').value;
 	var iterations = document.getElementById("algIterations").value;
+	var interference = document.getElementById('interference').value;
 	
 	var sameAlgorithms = true;
 	if (prisoners != null && prisoners.length == selectsCount) {
@@ -119,7 +120,7 @@ function prisonersDilemma() {
 		for (let j = i + 1; j < list.length; j++) {
 			
 			console.log("Comparation: [" + (i + 1) + ". " + list[i].value + "] - [" + (j + 1) + ". " + list[j].value + "]");
-			prisonersDilemmaCalculate(prisoners[i], prisoners[j], iterations);
+			prisonersDilemmaCalculate(prisoners[i], prisoners[j], iterations, interference);
 		}
 	}
 	
@@ -137,7 +138,7 @@ function prisonersDilemma() {
 	}
 }
 
-function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations) {
+function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations, interference) {
 
 	var tmpScore1 = 0;
 	var tmpScore2 = 0;
@@ -168,6 +169,19 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations) {
 				
 				statePrisoner2 = true;
 			}
+		}
+		
+		var interferenceRandomNumber1 = Math.random().toFixed(2);
+		var interferenceRandomNumber2 = Math.random().toFixed(2);
+		
+		if (interferenceRandomNumber1 > interference) {
+			
+			statePrisoner1 = !statePrisoner1;
+		}
+		
+		if (interferenceRandomNumber2 > interference) {
+			
+			statePrisoner2 = !statePrisoner2;
 		}
 		
 		// True - cooperate with police, betray the other prisoner.
