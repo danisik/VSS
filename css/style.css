@@ -31,15 +31,6 @@
   max-width: 80px;
 }
 
-#vizualize-btn {
-
-}
-
-#game {
-
-
-}
-
 .iteration-strategy {
   padding-bottom: 10px;
   display: flex;
@@ -137,4 +128,21 @@
 .chart {
   max-width: 700px;
   padding-left: 40px;
+}
+
+
+
+.row-animation {
+    opacity: 0;
+    transform: scale(0.6, 0.6) translate(50px, 0);
+    transition: opacity .2s ease-out, transform .2s ease-out;
+}
+
+.row-animation.visible {
+    opacity: 1;
+    transform: scale(1, 1) translate(0, 0);
+}
+
+.hidden {
+    display: none !important;
 }
