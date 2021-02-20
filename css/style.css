@@ -127,6 +127,14 @@
 }
 
 
+.charts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
 .chart {
-  max-width: 400px;
+  max-width: 700px;
+  padding-left: 40px;
 }
