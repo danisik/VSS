@@ -18,9 +18,17 @@
 }
 
 #iterations {
+
+}
+
+.iterations-basic {
   max-width: 100px;
   margin-right: 10px;
   margin-left: 10px;
+}
+
+.iterations-iteration {
+  max-width: 80px;
 }
 
 #vizualize-btn {
@@ -32,6 +40,37 @@
 
 }
 
+.iteration-strategy {
+  padding-bottom: 10px;
+  display: flex;
+}
+
+#iteration-settings {
+  margin: auto;
+  width: 50% !important;
+  max-width: 300px;
+}
+
+.delete-btn {
+  margin-left: 10px;
+}
+
+#add-strategy-btn {
+  font-size: 25px;
+  color: #007bff;
+  margin-top: -9px;
+}
+
+#add-strategy-btn:hover{
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+  cursor:default;
+}
+
+.margin-top {
+  margin-top: 10px;
+}
 
 
 .result-img {
@@ -56,8 +95,38 @@
 }
 
 .center-content {
-  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.settings-block {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%
+}
+
+.input-pair {
+  padding-right: 20px;
+
+  display: flex;
+  align-items: baseline;
+}
+
+.label {
+  padding-right: 10px;
+}
+
+.input-pair > :first-child {
+  margin-right: auto;    /* Push following flex items to the right */
+}
+
+#inteference {
+  max-width: 80px;
+}
+
+
+.chart {
+  max-width: 400px;
 }
