@@ -7,10 +7,24 @@ class Prisoner {
 		this.algorithmName = algorithmName;
 		this.algorithmMethod = window[algorithmName.toUpperCase()];
 		this.iterationResult = 0;
-		
+
+		this.setUpColors();
+
 		// Map, where key is name of prisoner and value is history with this prisoner.
 		this.history = new Map();
 	}
+
+	setUpColors() {
+		var r = Math.floor(Math.random() * 255);
+		var g = Math.floor(Math.random() * 255);
+		var b = Math.floor(Math.random() * 255);
+
+		this.backgroundColor = "rgba(" + r + "," + g + "," + b + ", 0.5)";
+
+		this.borderColor = "rgba(" + r + "," + g + "," + b + ", 1)";
+	}
+
+
 
 	// Get count of cooperates / deflects of current person.
 	getTypeCount(prisonerName, cooperate) {

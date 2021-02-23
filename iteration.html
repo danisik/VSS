@@ -39,7 +39,7 @@
 		<div class="form-group">
 			<div id="iteration-settings">
 				<div class="iteration-strategy">
-					<select class="form-control">
+					<select class="form-control strategy-select">
 							<option value="ALLC" selected>ALLC</option>
 							<option value="ALLD">ALLD</option>
 							<option value="ALT">ALT</option>
@@ -55,7 +55,7 @@
 				</div>
 
 				<div class="iteration-strategy">
-					<select class="form-control">
+					<select class="form-control strategy-select">
 							<option value="ALLC" selected>ALLC</option>
 							<option value="ALLD">ALLD</option>
 							<option value="ALT">ALT</option>
@@ -68,23 +68,6 @@
 							<option value="TFTT">TFTT</option>
 							<option value="TTFT">ALT</TTFT>
 					</select>
-				</div>
-
-				<div class="iteration-strategy">
-					<select class="form-control">
-							<option value="ALLC" selected>ALLC</option>
-							<option value="ALLD">ALLD</option>
-							<option value="ALT">ALT</option>
-							<option value="APP">APP</option>
-							<option value="CPAVG">CPAVG</option>
-							<option value="GRIM">GRIM</option>
-							<option value="PAV">PAV</option>
-							<option value="RAND">RAND</option>
-							<option value="TFT">TFT</option>
-							<option value="TFTT">TFTT</option>
-							<option value="TTFT">ALT</TTFT>
-					</select>
-					<button type="button" class="btn btn-danger delete-btn">x</button>
 				</div>
 		</div>
 
@@ -98,7 +81,7 @@
 
 				<div class="input-pair">
 					<span class="label">Iterations:</span>
-					<input class="form-control iterations-iteration" type="number" value="1" min="1" step="1" id="iterations" name="iterations">
+					<input class="form-control iterations-iteration" type="number" value="10" min="1" step="1" id="iterations" name="iterations">
 				</div>
 
 				<div class="input-pair">
@@ -144,133 +127,6 @@
 			</div>
 		</div>
 	</div>
-
-	<form onsubmit="prisonersDilemma(); return false">
-
-	<div>
-		<span>Number of algorithms:</span>
-		<input type="number" min="2" step="1" id="selectCount" name="selectCount" value="2" onchange="generateSelects()">
-	</div>
-
-	<div id="selectDiv" name="selectDiv">
-	</div>
-
-	<div>
-		<span>Iterations: </span>
-		<input type="number" min="1" step="1" id="algIterations" name="algIterations" value="1">
-	</div>
-
-
-	<div class="row col-md-12">
-		<section id="game">
-    <h2></h2>
-
-	<form action="#game">
-	<span>Let</span>
-	<div>
-	  <select id="alg1" name="alg1"></select>
-	</div>
-	<span>play against</span>
-
-	<div>
-	  <select id="alg2" name="alg2"></select>
-	</div>
-	<span>for</span>
-
-	<div>
-		<span>Interference: </span>
-		<input type="number" min="0" step="0.05" id="interference" name="interference" value="0.95">
-	</div>
-
-	<button type="submit">Submit</button>
-	</form>
-
-</section>
-	</div>
-
-
-
-
-
-<script>
-var ctx = document.getElementById('chart-points');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['ALLC', 'TFT', 'RAND'],
-        datasets: [{
-            label: 'Nadpis',
-            data: [12, 19, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-
-var ctx = document.getElementById('chart-strategies');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['ALLC', 'TFT', 'RAND'],
-        datasets: [{
-            label: 'Nadpis',
-            data: [12, 19, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-
-
-setTimeout(function () {
-	myChart.data.datasets[0].data = [20, 5, 14];
-
-		myChart.update();
-
-}, 2000);
-
-
-</script>
-
-
 
 
 <script type="text/javascript" src="js/classes.js"></script>

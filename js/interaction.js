@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) {
       initAddStrategyButton();
-initRemoveStrategyButton();
+      initRemoveStrategyButton();
 });
 
 
@@ -33,7 +33,7 @@ function addStrategy()
     let div = document.createElement("div");
     div.classList.add("iteration-strategy");
 
-    let html = '<select class="form-control">'
+    let html = '<select class="form-control strategy-select">'
   					 +	  '<option value="ALLC" selected="">ALLC</option>'
   					 +    '<option value="ALLD">ALLD</option>'
   					 +		'<option value="ALT">ALT</option>'
