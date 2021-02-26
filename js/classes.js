@@ -3,8 +3,10 @@ class Prisoner {
 	constructor(index, selectElement) {
 
 		this.score = 0;
-		this.name = index;
-		this.algorithmName = "";
+		this.id = index;
+		this.name = "Prisoner " + (index + 1);
+		this.algorithmName = selectElement.value;
+		this.algorithmMethod = window[this.algorithmName.toUpperCase()];
 		this.iterationResult = 0;
 		this.selectElement = selectElement;
 		this.setUpColors();
@@ -13,10 +15,16 @@ class Prisoner {
 		this.history = new Map();
 	}
 	
-	setAlgorithm() {
+	actualizeAlgorithm() {
 		
 		this.algorithmName = this.selectElement.value;
 		this.algorithmMethod = window[this.algorithmName.toUpperCase()];
+	}
+	
+	setAlgorithm(algorithmName) {
+		
+		this.selectElement.value = algorithmName;
+		actualizeAlgorithm();
 	}
 
 	setUpColors() {
@@ -32,9 +40,9 @@ class Prisoner {
 
 
 	// Get count of cooperates / deflects of current person.
-	getTypeCount(prisonerName, cooperate) {
+	getTypeCount(prisonerId, cooperate) {
 
-		var prisonerHistory = this.history.get(prisonerName);
+		var prisonerHistory = this.history.get(prisonerId);
 
 		if (prisonerHistory == null) {
 

@@ -22,9 +22,9 @@ function prisonersDilemma() {
 	hideTable();
 
 	var prisoner1 = new Prisoner(0, document.getElementById("strategy-1"));
-	prisoner1.setAlgorithm();
+	prisoner1.actualizeAlgorithm();
 	var prisoner2 = new Prisoner(1, document.getElementById("strategy-2"));
-	prisoner2.setAlgorithm();
+	prisoner2.actualizeAlgorithm();
 
 	i = 0;
 

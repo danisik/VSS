@@ -53,7 +53,7 @@ function addStrategy()
     let div = document.createElement("div");
     div.classList.add("iteration-strategy");
 	
-	html = '<span> Prisoner ' + (newId + 1) + '</span>';
+	html = '<span></span>';
 
     html = html + '<select class="form-control strategy-select" id="' + newId + '">'
   					 +	  '<option value="ALLC" selected="">ALLC</option>'
@@ -85,7 +85,9 @@ function addStrategy()
 
      initRemoveStrategyButton();
 	 
-	 addPrisoner(newId, div.getElementsByTagName("select")[0]);
+	 var prisonerName = addPrisoner(newId, div.getElementsByTagName("select")[0]);
+	 
+	 div.getElementsByTagName("span")[0].innerHTML = prisonerName;
 }
 
 function removeStrategy(removeButton)

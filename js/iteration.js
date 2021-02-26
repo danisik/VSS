@@ -33,7 +33,7 @@ function prisonersDilemma() {
 	for (let i = 0; i < prisoners.length; i++) {
 		
 		var prisoner = prisoners[i];
-		prisoner.setAlgorithm();
+		prisoner.actualizeAlgorithm();
 		
 		if (!rememberHistory || (!oldRememberHistory && prisoner.history.size > 0)) {
 			
@@ -55,7 +55,7 @@ function prisonersDilemma() {
 
 
 function runGame() {
-	
+		
 		setTimeout(function() {
 
 			// Start calculating scores.
@@ -72,10 +72,11 @@ function runGame() {
 			loop++;
 
 			if (loop < iterations) {
+				
 				runGame();
 
 			}
-		}, getSpeed());
+		}, getSpeed());		
 }
 
 function getSpeed() {
@@ -126,7 +127,7 @@ function initPointsGraph()
 
 				backgroundColor[i] = prisoner.backgroundColor;
 				borderColor[i] = prisoner.borderColor;
-				labels[i] = prisoner.algorithmName;
+				labels[i] = prisoner.name + " (" + prisoner.algorithmName + ")";
 		}
 
 		chartPoints.data.labels = labels;
@@ -152,13 +153,13 @@ function initRepresentationGraph()
 		for (i = 0 ; i < prisoners.length ; i++)
 		{
 				let prisoner = prisoners[i];
-				let key = prisoner.algorithmName;
+				let key = prisoner.name + " (" + prisoner.algorithmName + ")";;
 
 				if (!labels[key])
 				{
 						backgroundColor[key] = prisoner.backgroundColor;
 						borderColor[key] = prisoner.borderColor;
-						labels[key] = prisoner.algorithmName;
+						labels[key] = prisoner.name + " (" + prisoner.algorithmName + ")";;
 				}
 
 		}
@@ -227,7 +228,7 @@ function updateRepresentation() {
 	for (i = 0 ; i < prisoners.length ; i++)
 	{
 			let prisoner = prisoners[i];
-			let key = prisoner.algorithmName;
+			let key = prisoner.name + " (" + prisoner.algorithmName + ")";;
 			
 			if (values[key])
 			{
@@ -253,9 +254,9 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations, interferenc
 	var tmpHistory1 = [ ];
 	var tmpHistory2 = [ ];
 
-	var P1P2HistoryCount = prisoner1.history.has(prisoner2.name) ? prisoner1.history.get(prisoner2.name).length : 0;
-	var P1BetraysP2Count = prisoner2.getTypeCount(prisoner1.name, true);
-	var P2BetraysP1Count = prisoner1.getTypeCount(prisoner2.name, true);
+	var P1P2HistoryCount = prisoner1.history.has(prisoner2.id) ? prisoner1.history.get(prisoner2.id).length : 0;
+	var P1BetraysP2Count = prisoner2.getTypeCount(prisoner1.id, true);
+	var P2BetraysP1Count = prisoner1.getTypeCount(prisoner2.id, true);
 	
 	var statePrisoner1 = prisoner1.algorithmMethod(tmpHistory1, tmpHistory2);
 	var statePrisoner2 = prisoner2.algorithmMethod(tmpHistory2, tmpHistory1);
@@ -316,35 +317,38 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations, interferenc
 	tmpHistory2.push(statePrisoner2);
 
 	// Set history.
-	var oldHistory1 = prisoner1.history.get(prisoner2.name);
+	var oldHistory1 = prisoner1.history.get(prisoner2.id);
 	if (oldHistory1 == null) {
 
 		oldHistory1 = [ ];
 	}
 	oldHistory1 = oldHistory1.concat(tmpHistory2);
 
-	var oldHistory2 = prisoner2.history.get(prisoner1.name);
+	var oldHistory2 = prisoner2.history.get(prisoner1.id);
 	if (oldHistory2 == null) {
 
 		oldHistory2 = [ ];
 	}
 	oldHistory2 = oldHistory2.concat(tmpHistory1);
 
-	prisoner1.history.set(prisoner2.name, oldHistory1);
-	prisoner2.history.set(prisoner1.name, oldHistory2);
+	prisoner1.history.set(prisoner2.id, oldHistory1);
+	prisoner2.history.set(prisoner1.id, oldHistory2);
 }
 
 function addPrisoner(id, selectElement) {
 	
-	prisoners.push(new Prisoner(id, selectElement));
+	var prisoner = new Prisoner(id, selectElement);
+	prisoners.push(prisoner);
 	
 	for (let i = 0; i < prisoners.length; i++) {
 		
-		if (prisoners[i].name != id) {
+		if (prisoners[i].id != id) {
 			
 			prisoners[i].history.set(id, [ ]);
 		}
 	}
+	
+	return prisoner.name;
 }
 
 function deletePrisoner(id) {
@@ -353,7 +357,7 @@ function deletePrisoner(id) {
 	
 	for (let i = 0; i < prisoners.length; i++) {
 		
-		if (prisoners[i].name != id) {
+		if (prisoners[i].id != id) {
 			
 			prisoners[i].history.delete(id);
 			
