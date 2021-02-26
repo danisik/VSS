@@ -21,8 +21,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function prisonersDilemma() {
 	hideTable();
 
-	var prisoner1 = new Prisoner(0, document.getElementById("strategy-1").value);
-	var prisoner2 = new Prisoner(1, document.getElementById("strategy-2").value);
+	var prisoner1 = new Prisoner(0, document.getElementById("strategy-1"));
+	prisoner1.setAlgorithm();
+	var prisoner2 = new Prisoner(1, document.getElementById("strategy-2"));
+	prisoner2.setAlgorithm();
 
 	i = 0;
 

@@ -1,6 +1,3 @@
-var SELECT_DEFAULT_NAME = 'alg';
-
-var list = [ ];
 var prisoners = [ ];
 
 var selectsCount;
@@ -25,79 +22,47 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 function prisonersDilemma() {
-	list = document.getElementsByClassName("strategy-select");
-
-	selectsCount = document.getElementsByClassName('iteration-strategy').length;
+	
+	var oldRememberHistory = rememberHistory;
 	iterations = document.getElementById("iterations").value;
 	interference = document.getElementById('inteference').value;
-	rememberHistory = document.getElementById('history').value;
+	rememberHistory = document.getElementById('history').checked;
 	mutation = document.getElementById('mutation').value;
 	speed = document.getElementById('speed').value;
+	
+	for (let i = 0; i < prisoners.length; i++) {
+		
+		var prisoner = prisoners[i];
+		prisoner.setAlgorithm();
+		
+		if (!rememberHistory || (!oldRememberHistory && prisoner.history.size > 0)) {
+			
+			prisoner.history.forEach((value, key) => {
 
-
-	var sameAlgorithms = true;
-	if (prisoners != null && prisoners.length == selectsCount) {
-
-		for (let i = 0; i < selectsCount; i++) {
-
-			if (prisoners[i].algorithmName != list[i].value) {
-
-				sameAlgorithms = false;
-				break;
-			}
-		}
-
-	} else {
-
-		sameAlgorithms = false;
-	}
-
-	// Create prisoners.
-	if (!sameAlgorithms) {
-
-		prisoners = [ ];
-		for (let i = 0; i < list.length; i++) {
-
-			prisoners.push(new Prisoner(i, list[i].value));
+				prisoner.history.set(key, [ ]);
+				prisoner.score = 0;
+			});
 		}
 	}
 
 	// pro iterace
 	loop = 0;
 
-
-
 	initGraphs();
 
 	runGame();
-
-
-
-
-	// Print results.
-	console.log("");
-	console.log("Results:");
-	for (let i = 0; i < list.length; i++) {
-
-		console.log("Prisoner " +  (i + 1) + " [" + list[i].value + "]: \t" + prisoners[i].score);
-
-		prisoners[i].history.forEach((value, key) => {
-
-			console.log(key, value)
-		});
-	}
 }
 
 
 function runGame() {
+	
 		setTimeout(function() {
 
 			// Start calculating scores.
-			for (let i = 0; i < list.length; i++) {
+			for (let i = 0; i < prisoners.length; i++) {
 
-				for (let j = i + 1; j < list.length; j++) {
+				for (let j = i + 1; j < prisoners.length; j++) {
 
-					//console.log("Comparation: [" + (i + 1) + ". " + list[i].value + "] - [" + (j + 1) + ". " + list[j].value + "]");
 					prisonersDilemmaCalculate(prisoners[i], prisoners[j], iterations, interference);
 				}
 			}
@@ -263,19 +228,16 @@ function updateRepresentation() {
 	{
 			let prisoner = prisoners[i];
 			let key = prisoner.algorithmName;
-console.log(values[key]);
+			
 			if (values[key])
 			{
-				console.log(1);
 					values[key] += 1;
 			}
-			else {
-				console.log(2);
+			else {				
 					values[key] = 1;
 			}
 
 	}
-console.log(values);
 	chartStrategies.data.datasets[0].data = Object.values(values);
 	//chartStrategies.data.labels = labels;
 	//chartStrategies.data.datasets[0].backgroundColor = backgroundColor;
@@ -288,99 +250,70 @@ console.log(values);
 
 function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations, interference) {
 
-	var tmpScore1 = 0;
-	var tmpScore2 = 0;
-
 	var tmpHistory1 = [ ];
 	var tmpHistory2 = [ ];
 
 	var P1P2HistoryCount = prisoner1.history.has(prisoner2.name) ? prisoner1.history.get(prisoner2.name).length : 0;
 	var P1BetraysP2Count = prisoner2.getTypeCount(prisoner1.name, true);
 	var P2BetraysP1Count = prisoner1.getTypeCount(prisoner2.name, true);
+	
+	var statePrisoner1 = prisoner1.algorithmMethod(tmpHistory1, tmpHistory2);
+	var statePrisoner2 = prisoner2.algorithmMethod(tmpHistory2, tmpHistory1);
 
-	for (let i = 0; i < iterations; i++) {
+	if (P1P2HistoryCount >= 10) {
 
-		var statePrisoner1 = prisoner1.algorithmMethod(tmpHistory1, tmpHistory2);
-		var statePrisoner2 = prisoner2.algorithmMethod(tmpHistory2, tmpHistory1);
+		var probabilityBetrayP1P2 = (P1BetraysP2Count / P1P2HistoryCount).toFixed(2);
+		var probabilityBetrayP2P1 = (P2BetraysP1Count / P1P2HistoryCount).toFixed(2);
 
-		if (P1P2HistoryCount >= 10) {
+		if (!statePrisoner1 && changeState(probabilityBetrayP2P1)) {
 
-			var probabilityBetrayP1P2 = (P1BetraysP2Count / P1P2HistoryCount).toFixed(2);
-			var probabilityBetrayP2P1 = (P2BetraysP1Count / P1P2HistoryCount).toFixed(2);
-
-			if (!statePrisoner1 && changeState(probabilityBetrayP2P1)) {
-
-				statePrisoner1 = true;
-			}
-
-			if (!statePrisoner2 && changeState(probabilityBetrayP1P2)) {
-
-				statePrisoner2 = true;
-			}
+			statePrisoner1 = true;
 		}
 
-		var interferenceRandomNumber1 = Math.random().toFixed(2);
-		var interferenceRandomNumber2 = Math.random().toFixed(2);
+		if (!statePrisoner2 && changeState(probabilityBetrayP1P2)) {
 
-		if (interferenceRandomNumber1 > interference) {
-
-			statePrisoner1 = !statePrisoner1;
+			statePrisoner2 = true;
 		}
-
-		if (interferenceRandomNumber2 > interference) {
-
-			statePrisoner2 = !statePrisoner2;
-		}
-
-		// True - cooperate with police, betray the other prisoner.
-		// False - do not cooperate with police.
-		if (statePrisoner1 && statePrisoner2) {
-
-			// If A and B each betray the other, each of them serves two years in prison.
-			tmpScore1 += 2;
-			tmpScore2 += 2;
-
-			P1BetraysP2Count++;
-			P2BetraysP1Count++;
-
-		} else if (!statePrisoner1 && !statePrisoner2){
-
-			// If A and B both remain silent, both of them will only serve one year in prison (on the lesser charge).
-			tmpScore1 += 1;
-			tmpScore2 += 1;
-
-		} else {
-
-			// If A betrays B but B remains silent, A will be set free and B will serve three years in prison (and vice versa)
-
-			if (statePrisoner1) {
-
-				P1BetraysP2Count++;
-
-			} else {
-
-				tmpScore1 += 3;
-			}
-
-			if (statePrisoner2) {
-
-				P2BetraysP1Count++;
-
-			} else {
-
-				tmpScore2 += 3;
-			}
-		}
-
-		P1P2HistoryCount++;
-
-		tmpHistory1.push(statePrisoner1);
-		tmpHistory2.push(statePrisoner2);
-
-		console.log("\tIteration: " + (i + 1));
-		console.log("\t\tPrisoner 1: " + tmpScore1);
-		console.log("\t\tPrisoner 2: " + tmpScore2);
 	}
+
+	var interferenceRandomNumber1 = Math.random().toFixed(2);
+	var interferenceRandomNumber2 = Math.random().toFixed(2);
+
+	if (interferenceRandomNumber1 > (1 - interference)) {
+
+		statePrisoner1 = !statePrisoner1;
+	}
+
+	if (interferenceRandomNumber2 > (1 - interference)) {
+
+		statePrisoner2 = !statePrisoner2;
+	}
+
+	// True - cooperate with police, betray the other prisoner.
+	// False - do not cooperate with police.
+	if (statePrisoner1 && statePrisoner2) {
+
+		// If A and B each betray the other, each of them serves two years in prison.
+		prisoner1.score += 2;
+		prisoner2.score += 2;
+
+	} else if (!statePrisoner1 && !statePrisoner2){
+
+		// If A and B both remain silent, both of them will only serve one year in prison (on the lesser charge).
+		prisoner1.score += 1;
+		prisoner2.score += 1;
+
+	} else {
+
+		// If A betrays B but B remains silent, A will be set free and B will serve three years in prison (and vice versa)
+		prisoner1.score += statePrisoner1 ? 0 : 3;
+		prisoner2.score += statePrisoner2 ? 0 : 3;
+	}
+
+	P1P2HistoryCount++;
+
+	tmpHistory1.push(statePrisoner1);
+	tmpHistory2.push(statePrisoner2);
 
 	// Set history.
 	var oldHistory1 = prisoner1.history.get(prisoner2.name);
@@ -398,8 +331,37 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations, interferenc
 	oldHistory2 = oldHistory2.concat(tmpHistory1);
 
 	prisoner1.history.set(prisoner2.name, oldHistory1);
-	prisoner1.score += tmpScore1;
-
 	prisoner2.history.set(prisoner1.name, oldHistory2);
-	prisoner2.score += tmpScore2;
+}
+
+function addPrisoner(id, selectElement) {
+	
+	prisoners.push(new Prisoner(id, selectElement));
+	
+	for (let i = 0; i < prisoners.length; i++) {
+		
+		if (prisoners[i].name != id) {
+			
+			prisoners[i].history.set(id, [ ]);
+		}
+	}
+}
+
+function deletePrisoner(id) {
+	
+	let idOfDeletedPrisoner = 0;
+	
+	for (let i = 0; i < prisoners.length; i++) {
+		
+		if (prisoners[i].name != id) {
+			
+			prisoners[i].history.delete(id);
+			
+		} else {
+			
+			idOfDeletedPrisoner = i;			
+		}
+	}
+	
+	prisoners.splice(idOfDeletedPrisoner, 1);
 }

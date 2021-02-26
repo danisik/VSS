@@ -1,3 +1,8 @@
+var idSelects = [ ];
+
+addStrategy();
+addStrategy();
+
 document.addEventListener("DOMContentLoaded", function(event) {
       initAddStrategyButton();
       initRemoveStrategyButton();
@@ -30,10 +35,27 @@ function initRemoveStrategyButton()
 
 function addStrategy()
 {
+	let newId = 0;
+	
+	while(true) {
+					
+		if (idSelects.indexOf(newId) != -1) {
+			
+			newId++;
+			
+		} else {
+			
+			idSelects.push(newId);
+			break;
+		}					
+	}
+	
     let div = document.createElement("div");
     div.classList.add("iteration-strategy");
+	
+	html = '<span> Prisoner ' + (newId + 1) + '</span>';
 
-    let html = '<select class="form-control strategy-select">'
+    html = html + '<select class="form-control strategy-select" id="' + newId + '">'
   					 +	  '<option value="ALLC" selected="">ALLC</option>'
   					 +    '<option value="ALLD">ALLD</option>'
   					 +		'<option value="ALT">ALT</option>'
@@ -45,8 +67,12 @@ function addStrategy()
   					 +		'<option value="TFT">TFT</option>'
   					 +		'<option value="TFTT">TFTT</option>'
   					 +		'<option value="TTFT">ALT</option>'
-					 +    '</select>'
-					 +    '<button type="button" class="btn btn-danger delete-btn">x</button>';
+					 +    '</select>';
+					 
+	if (idSelects.length > 2) {
+		
+		html = html + '<button type="button" class="btn btn-danger delete-btn">x</button>';
+	}
 
      div.innerHTML = html;
 
@@ -58,13 +84,20 @@ function addStrategy()
      }
 
      initRemoveStrategyButton();
+	 
+	 addPrisoner(newId, div.getElementsByTagName("select")[0]);
 }
 
 function removeStrategy(removeButton)
 {
     let strategyDiv = removeButton.closest(".iteration-strategy");
+	let selectElement = strategyDiv.getElementsByTagName("select")[0];
 
     if (strategyDiv) {
+		
         strategyDiv.remove();
     }
+	
+	deletePrisoner(selectElement.id);
+	idSelects.splice(selectElement.id, 1);
 }
