@@ -24,7 +24,8 @@ class Prisoner {
 	setAlgorithm(algorithmName) {
 		
 		this.selectElement.value = algorithmName;
-		actualizeAlgorithm();
+		this.algorithmName = this.selectElement.value;
+		this.algorithmMethod = window[this.algorithmName.toUpperCase()];
 	}
 
 	setUpColors() {

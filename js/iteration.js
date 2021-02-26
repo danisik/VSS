@@ -6,6 +6,10 @@ var interference;
 var rememberHistory;
 var mutation;
 var speed;
+var repeatMutation;
+
+var lastPrisonerName = "";
+var lastPrisonerCount = 0;
 
 var chartPoints;
 var chartStrategies;
@@ -27,7 +31,7 @@ function prisonersDilemma() {
 	iterations = document.getElementById("iterations").value;
 	interference = document.getElementById('inteference').value;
 	rememberHistory = document.getElementById('history').checked;
-	mutation = document.getElementById('mutation').value;
+	mutation = document.getElementById('mutation').checked;
 	speed = document.getElementById('speed').value;
 	
 	for (let i = 0; i < prisoners.length; i++) {
@@ -50,7 +54,7 @@ function prisonersDilemma() {
 
 	initGraphs();
 
-	runGame();
+	runGame();	
 }
 
 
@@ -63,9 +67,9 @@ function runGame() {
 
 				for (let j = i + 1; j < prisoners.length; j++) {
 
-					prisonersDilemmaCalculate(prisoners[i], prisoners[j], iterations, interference);
+					prisonersDilemmaCalculate(prisoners[i], prisoners[j], iterations, interference);					
 				}
-			}
+			}			
 
 			updatePoints();
 
@@ -74,9 +78,80 @@ function runGame() {
 			if (loop < iterations) {
 				
 				runGame();
-
+				
+			} else {
+				
+				if (mutation) {
+			
+					doMutation();
+		
+					if (repeatMutation) {
+			
+						loop = 0;
+						runGame();			
+					}
+				}
 			}
+			
 		}, getSpeed());		
+}
+
+function doMutation() {
+	
+	var algorithmName = prisoners[0].algorithmName;
+	var sameAlgorithmCount = 0;
+	
+	var min = Number.MAX_VALUE;
+	var idMin = 0;
+	var max = 0;
+	var idMax = 0;
+	
+	for (let i = 0; i < prisoners.length; i++) {
+		
+		if (algorithmName == prisoners[i].algorithmName) {
+			
+			sameAlgorithmCount++;
+		}
+				
+		var score = prisoners[i].score;
+		
+		if (score > max) {
+			
+			max = score;
+			idMax = i;
+			continue;
+		}
+
+		if (score < min) {
+			
+			min = score;
+			idMin = i;
+			continue;
+		}
+	}
+	
+	var lastPrisoner = prisoners[idMax];
+	var firstPrisoner = prisoners[idMin];
+	
+	if (lastPrisoner.name == lastPrisonerName) {
+		
+		lastPrisonerCount++;
+		
+	} else {
+		
+		lastPrisonerName = lastPrisoner.name;
+		lastPrisonerCount = 1;
+	}
+	
+	if (sameAlgorithmCount == prisoners.length || lastPrisonerCount >= 5) {
+		
+		repeatMutation = false;
+		
+	} else {
+		
+		repeatMutation = true;
+		lastPrisoner.setAlgorithm(firstPrisoner.algorithmName);
+	}
 }
 
 function getSpeed() {
