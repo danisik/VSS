@@ -2,30 +2,34 @@ class Prisoner {
 
 	constructor(index, selectElement) {
 
+
 		this.score = 0;
 		this.id = index;
-		this.name = "Prisoner " + (index + 1);
+		this.name = "Prisoner&nbsp;" + (index + 1) + ":";
 		this.algorithmName = selectElement.value;
 		this.algorithmMethod = window[this.algorithmName.toUpperCase()];
 		this.iterationResult = 0;
 		this.selectElement = selectElement;
+
+		this.graphLabel = "Prisoner " + (this.id + 1) + " (" + this.algorithmName + ")";
 		this.setUpColors();
 
 		// Map, where key is name of prisoner and value is history with this prisoner.
 		this.history = new Map();
 	}
-	
+
 	actualizeAlgorithm() {
-		
+
 		this.algorithmName = this.selectElement.value;
 		this.algorithmMethod = window[this.algorithmName.toUpperCase()];
+		this.graphLabel = "Prisoner " + (this.id + 1) + " (" + this.algorithmName + ")";
 	}
-	
+
 	setAlgorithm(algorithmName) {
-		
-		this.selectElement.value = algorithmName;
-		this.algorithmName = this.selectElement.value;
+
+		this.algorithmName = algorithmName;
 		this.algorithmMethod = window[this.algorithmName.toUpperCase()];
+		this.graphLabel = "Prisoner " + (this.id + 1) + " (" + this.algorithmName + ")";
 	}
 
 	setUpColors() {

@@ -146,3 +146,8 @@
 .hidden {
     display: none !important;
 }
+
+.prisoner-name {
+    padding-right: 10px;
+    margin-top: 5px;
+}

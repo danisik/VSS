@@ -1,9 +1,11 @@
 var idSelects = [ ];
 
-addStrategy();
-addStrategy();
+
 
 document.addEventListener("DOMContentLoaded", function(event) {
+      addStrategy();
+      addStrategy();
+
       initAddStrategyButton();
       initRemoveStrategyButton();
 });
@@ -36,26 +38,26 @@ function initRemoveStrategyButton()
 function addStrategy()
 {
 	let newId = 0;
-	
+
 	while(true) {
-					
+
 		if (idSelects.indexOf(newId) != -1) {
-			
+
 			newId++;
-			
+
 		} else {
-			
+
 			idSelects.push(newId);
 			break;
-		}					
+		}
 	}
-	
+
     let div = document.createElement("div");
     div.classList.add("iteration-strategy");
-	
-	html = '<span></span>';
 
-    html = html + '<select class="form-control strategy-select" id="' + newId + '">'
+	html = '<span class="prisoner-name"></span>';
+
+    html += '<select class="form-control strategy-select" id="' + newId + '">'
   					 +	  '<option value="ALLC" selected="">ALLC</option>'
   					 +    '<option value="ALLD">ALLD</option>'
   					 +		'<option value="ALT">ALT</option>'
@@ -66,27 +68,28 @@ function addStrategy()
   					 +		'<option value="RAND">RAND</option>'
   					 +		'<option value="TFT">TFT</option>'
   					 +		'<option value="TFTT">TFTT</option>'
-  					 +		'<option value="TTFT">ALT</option>'
+  					 +		'<option value="TTFT">TTFT</option>'
 					 +    '</select>';
-					 
+
+  // pro první dva nebudeme přidávat možnost smazání
 	if (idSelects.length > 2) {
-		
+
 		html = html + '<button type="button" class="btn btn-danger delete-btn">x</button>';
 	}
 
-     div.innerHTML = html;
+   div.innerHTML = html;
 
-     let strategyBox = document.getElementById("iteration-settings");
+   let strategyBox = document.getElementById("iteration-settings");
 
-     if (strategyBox)
-     {
-        strategyBox.appendChild(div);
-     }
+   if (strategyBox)
+   {
+      strategyBox.appendChild(div);
+   }
 
-     initRemoveStrategyButton();
-	 
+   initRemoveStrategyButton();
+
 	 var prisonerName = addPrisoner(newId, div.getElementsByTagName("select")[0]);
-	 
+
 	 div.getElementsByTagName("span")[0].innerHTML = prisonerName;
 }
 
@@ -96,10 +99,10 @@ function removeStrategy(removeButton)
 	let selectElement = strategyDiv.getElementsByTagName("select")[0];
 
     if (strategyDiv) {
-		
+
         strategyDiv.remove();
     }
-	
+
 	deletePrisoner(selectElement.id);
 	idSelects.splice(selectElement.id, 1);
 }

@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("vizualize-btn").addEventListener('click', function(e) {
 					e.preventDefault();
 					prisonersDilemma();
+
+					disableButton();
 			})
 });
 
@@ -29,7 +31,7 @@ function prisonersDilemma() {
 	i = 0;
 
 	iterations = document.getElementById("iterations").value;
-	
+
 	prepareTable(prisoner1, prisoner2);
 
 	runGame(prisoner1, prisoner2);
@@ -113,6 +115,9 @@ function runGame(prisoner1, prisoner2)
 	    if (i < iterations) {           //  if the counter < 10, call the loop function
 	      runGame(prisoner1, prisoner2);             //  ..  again which will trigger another
 	    }                       //  ..  setTimeout()
+			else {
+				enableButton();
+			}
 	  }, 100);
 }
 

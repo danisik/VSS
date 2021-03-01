@@ -20,27 +20,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			document.getElementById("vizualize-btn").addEventListener('click', function(e) {
 					e.preventDefault();
 					prisonersDilemma();
+
+					disableButton();
 			})
 });
 
 
 
 function prisonersDilemma() {
-	
+
 	var oldRememberHistory = rememberHistory;
 	iterations = document.getElementById("iterations").value;
 	interference = document.getElementById('inteference').value;
 	rememberHistory = document.getElementById('history').checked;
 	mutation = document.getElementById('mutation').checked;
 	speed = document.getElementById('speed').value;
-	
+
 	for (let i = 0; i < prisoners.length; i++) {
-		
+
 		var prisoner = prisoners[i];
 		prisoner.actualizeAlgorithm();
-		
+
 		if (!rememberHistory || (!oldRememberHistory && prisoner.history.size > 0)) {
-			
+
 			prisoner.history.forEach((value, key) => {
 
 				prisoner.history.set(key, [ ]);
@@ -54,12 +56,12 @@ function prisonersDilemma() {
 
 	initGraphs();
 
-	runGame();	
+	runGame();
 }
 
 
 function runGame() {
-		
+
 		setTimeout(function() {
 
 			// Start calculating scores.
@@ -67,90 +69,103 @@ function runGame() {
 
 				for (let j = i + 1; j < prisoners.length; j++) {
 
-					prisonersDilemmaCalculate(prisoners[i], prisoners[j], iterations, interference);					
+					prisonersDilemmaCalculate(prisoners[i], prisoners[j], iterations, interference);
 				}
-			}			
+			}
 
 			updatePoints();
 
 			loop++;
 
 			if (loop < iterations) {
-				
+
 				runGame();
-				
+
 			} else {
-				
+
 				if (mutation) {
-			
+
 					doMutation();
-		
+
 					if (repeatMutation) {
-			
+
 						loop = 0;
-						runGame();			
+						runGame();
 					}
 				}
+				else {
+					enableButton();
+				}
 			}
-			
-		}, getSpeed());		
+
+		}, getSpeed());
 }
 
 function doMutation() {
-	
+
 	var algorithmName = prisoners[0].algorithmName;
 	var sameAlgorithmCount = 0;
-	
+
 	var min = Number.MAX_VALUE;
 	var idMin = 0;
 	var max = 0;
 	var idMax = 0;
-	
+
 	for (let i = 0; i < prisoners.length; i++) {
-		
+
 		if (algorithmName == prisoners[i].algorithmName) {
-			
+
 			sameAlgorithmCount++;
 		}
-				
+
 		var score = prisoners[i].score;
-		
+
 		if (score > max) {
-			
+
 			max = score;
 			idMax = i;
 			continue;
 		}
 
 		if (score < min) {
-			
+
 			min = score;
 			idMin = i;
 			continue;
 		}
 	}
-	
+
 	var lastPrisoner = prisoners[idMax];
 	var firstPrisoner = prisoners[idMin];
-	
+
 	if (lastPrisoner.name == lastPrisonerName) {
-		
+
 		lastPrisonerCount++;
-		
+
 	} else {
-		
+
 		lastPrisonerName = lastPrisoner.name;
 		lastPrisonerCount = 1;
 	}
-	
+
 	if (sameAlgorithmCount == prisoners.length || lastPrisonerCount >= 5) {
-		
+
 		repeatMutation = false;
-		
+		enableButton();
+
 	} else {
-		
+
 		repeatMutation = true;
 		lastPrisoner.setAlgorithm(firstPrisoner.algorithmName);
+
+
+		for (let i = 0; i < prisoners.length; i++) {
+			prisoners[i].score = 0;
+		}
+
+		initGraphs();
+		updatePoints();
+
 	}
 }
 
@@ -202,7 +217,7 @@ function initPointsGraph()
 
 				backgroundColor[i] = prisoner.backgroundColor;
 				borderColor[i] = prisoner.borderColor;
-				labels[i] = prisoner.name + " (" + prisoner.algorithmName + ")";
+				labels[i] = prisoner.graphLabel;
 		}
 
 		chartPoints.data.labels = labels;
@@ -228,13 +243,13 @@ function initRepresentationGraph()
 		for (i = 0 ; i < prisoners.length ; i++)
 		{
 				let prisoner = prisoners[i];
-				let key = prisoner.name + " (" + prisoner.algorithmName + ")";;
+				let key = prisoner.algorithmName;
 
 				if (!labels[key])
 				{
 						backgroundColor[key] = prisoner.backgroundColor;
 						borderColor[key] = prisoner.borderColor;
-						labels[key] = prisoner.name + " (" + prisoner.algorithmName + ")";;
+						labels[key] = key;
 				}
 
 		}
@@ -303,13 +318,13 @@ function updateRepresentation() {
 	for (i = 0 ; i < prisoners.length ; i++)
 	{
 			let prisoner = prisoners[i];
-			let key = prisoner.name + " (" + prisoner.algorithmName + ")";;
-			
+			let key = prisoner.algorithmName;
+
 			if (values[key])
 			{
 					values[key] += 1;
 			}
-			else {				
+			else {
 					values[key] = 1;
 			}
 
@@ -332,7 +347,7 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations, interferenc
 	var P1P2HistoryCount = prisoner1.history.has(prisoner2.id) ? prisoner1.history.get(prisoner2.id).length : 0;
 	var P1BetraysP2Count = prisoner2.getTypeCount(prisoner1.id, true);
 	var P2BetraysP1Count = prisoner1.getTypeCount(prisoner2.id, true);
-	
+
 	var statePrisoner1 = prisoner1.algorithmMethod(tmpHistory1, tmpHistory2);
 	var statePrisoner2 = prisoner2.algorithmMethod(tmpHistory2, tmpHistory1);
 
@@ -411,36 +426,36 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, iterations, interferenc
 }
 
 function addPrisoner(id, selectElement) {
-	
+
 	var prisoner = new Prisoner(id, selectElement);
 	prisoners.push(prisoner);
-	
+
 	for (let i = 0; i < prisoners.length; i++) {
-		
+
 		if (prisoners[i].id != id) {
-			
+
 			prisoners[i].history.set(id, [ ]);
 		}
 	}
-	
+
 	return prisoner.name;
 }
 
 function deletePrisoner(id) {
-	
+
 	let idOfDeletedPrisoner = 0;
-	
+
 	for (let i = 0; i < prisoners.length; i++) {
-		
+
 		if (prisoners[i].id != id) {
-			
+
 			prisoners[i].history.delete(id);
-			
+
 		} else {
-			
-			idOfDeletedPrisoner = i;			
+
+			idOfDeletedPrisoner = i;
 		}
 	}
-	
+
 	prisoners.splice(idOfDeletedPrisoner, 1);
 }
