@@ -28,6 +28,7 @@ function initRemoveStrategyButton()
     var removeButtons = document.getElementsByClassName("delete-btn");
 
     Array.from(removeButtons).forEach(function(removeButton) {
+		  
           removeButton.addEventListener('click', function() {
           removeStrategy(removeButton);
         });
@@ -86,11 +87,17 @@ function addStrategy()
       strategyBox.appendChild(div);
    }
 
-   initRemoveStrategyButton();
+   var removeButton = div.getElementsByTagName("button")[0];
+   
+   if (removeButton != null) {
+	   removeButton.addEventListener('click', function() {
+          removeStrategy(removeButton);
+        });
+   }
 
-	 var prisonerName = addPrisoner(newId, div.getElementsByTagName("select")[0]);
+   var prisonerName = addPrisoner(newId, div.getElementsByTagName("select")[0]);
 
-	 div.getElementsByTagName("span")[0].innerHTML = prisonerName;
+   div.getElementsByTagName("span")[0].innerHTML = prisonerName;
 }
 
 function removeStrategy(removeButton)
@@ -105,4 +112,5 @@ function removeStrategy(removeButton)
 
 	deletePrisoner(selectElement.id);
 	idSelects.splice(selectElement.id, 1);
+	console.log("removeStrategy");
 }
