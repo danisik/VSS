@@ -1,6 +1,3 @@
-// TODO: error -> scénář -> vytvořím 4 prisonery, smažu 3. prisonera a zapnu vizualizaci -> jakoby se první prisoner úplně vymazal a nebral se v potaz -> ostatní prisoneři jsou v pořádku a tahle chyba přetrvává po celou dobu, že první prisoner jakoby neexistoval.
-
-
 var prisoners = [ ];
 
 var selectsCount;
