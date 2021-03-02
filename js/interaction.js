@@ -112,5 +112,4 @@ function removeStrategy(removeButton)
 
 	deletePrisoner(selectElement.id);
 	idSelects.splice(selectElement.id, 1);
-	console.log("removeStrategy");
 }
