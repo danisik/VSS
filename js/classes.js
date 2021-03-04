@@ -1,7 +1,21 @@
+/*
+ * Created 2021 by Vojtech Danisik and Jan Carnogursky.
+ *
+ * The author dedicates this file to the public domain.
+ */
+ 
+ 
+/**
+* Class representing single prisoner in prisonner's dilemma.
+*/
 class Prisoner {
 
+	/**
+	* Constructor.
+	* @param index - index of prisoner.
+	* @param selectElement - Select element with used algorithm.
+	*/
 	constructor(index, selectElement) {
-
 
 		this.score = 0;
 		this.id = index;
@@ -18,6 +32,9 @@ class Prisoner {
 		this.history = new Map();
 	}
 
+	/**
+	* Actualize algorithm name from select element.
+	*/
 	actualizeAlgorithm() {
 
 		this.algorithmName = this.selectElement.value;
@@ -25,6 +42,10 @@ class Prisoner {
 		this.graphLabel = "Prisoner " + (this.id + 1) + " (" + this.algorithmName + ")";
 	}
 
+	/**
+	* Set new algorithm name - used in mutation.
+	* @param algorithmName - Name of new algorithm.
+	*/
 	setAlgorithm(algorithmName) {
 
 		this.algorithmName = algorithmName;
@@ -32,7 +53,11 @@ class Prisoner {
 		this.graphLabel = "Prisoner " + (this.id + 1) + " (" + this.algorithmName + ")";
 	}
 
+	/**
+	* Set up colors for graphs.
+	*/
 	setUpColors() {
+		
 		var r = Math.floor(Math.random() * 255);
 		var g = Math.floor(Math.random() * 255);
 		var b = Math.floor(Math.random() * 255);
@@ -44,9 +69,14 @@ class Prisoner {
 
 
 
-	// Get count of cooperates / deflects of current person.
+	/**
+	* Get count of cooperates / deflects of current person.
+	* @param prisonerId - Id of other prisoner.
+	* @param cooperate - True if we want to count situations where other prisoner cooperates with police, false otherwise.
+	*/
 	getTypeCount(prisonerId, cooperate) {
 
+		// Get history with other prisoner.
 		var prisonerHistory = this.history.get(prisonerId);
 
 		if (prisonerHistory == null) {
@@ -56,6 +86,7 @@ class Prisoner {
 
 		var count = 0;
 
+		// Count cooperates / deflects with other prisoner.
 		for (let i = 0; i < prisonerHistory.length; i++) {
 
 			if (prisonerHistory[i] == cooperate) {

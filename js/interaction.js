@@ -1,7 +1,15 @@
+/*
+ * Created 2021 by Vojtech Danisik and Jan Carnogursky.
+ *
+ * The author dedicates this file to the public domain.
+ */
+
+ 
 var idSelects = [ ];
 
-
-
+/**
+* Initialize page.
+*/
 document.addEventListener("DOMContentLoaded", function(event) {
       addStrategy();
       addStrategy();
@@ -11,8 +19,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 
-function initAddStrategyButton()
-{
+/**
+* Initialize button event for adding new strategies to page.
+*/
+function initAddStrategyButton() {
     let addButton = document.getElementById("add-strategy-btn");
 
     if (addButton)
@@ -23,8 +33,10 @@ function initAddStrategyButton()
     }
 }
 
-function initRemoveStrategyButton()
-{
+/**
+* Initialize button event for deleting strategy.
+*/
+function initRemoveStrategyButton() {
     var removeButtons = document.getElementsByClassName("delete-btn");
 
     Array.from(removeButtons).forEach(function(removeButton) {
@@ -36,10 +48,13 @@ function initRemoveStrategyButton()
 }
 
 
-function addStrategy()
-{
+/**
+* Adding new strategy.
+*/
+function addStrategy() {
 	let newId = 0;
 
+	// Try to find id for new prisoner.
 	while(true) {
 
 		if (idSelects.indexOf(newId) != -1) {
@@ -53,6 +68,7 @@ function addStrategy()
 		}
 	}
 
+	// Create new div with select element.
     let div = document.createElement("div");
     div.classList.add("iteration-strategy");
 
@@ -72,14 +88,16 @@ function addStrategy()
   					 +		'<option value="TTFT">TTFT</option>'
 					 +    '</select>';
 
-  // pro první dva nebudeme přidávat možnost smazání
+	// We don't want to add remove buttons for first 2 prisoners.
 	if (idSelects.length > 2) {
 
 		html = html + '<button type="button" class="btn btn-danger delete-btn">x</button>';
 	}
 
+	// Set content of div.
    div.innerHTML = html;
 
+   // Get strategy box and try to add a div.
    let strategyBox = document.getElementById("iteration-settings");
 
    if (strategyBox)
@@ -87,6 +105,7 @@ function addStrategy()
       strategyBox.appendChild(div);
    }
 
+   // Get remove button if exists and add event listener for removing current prisoner.
    var removeButton = div.getElementsByTagName("button")[0];
    
    if (removeButton != null) {
@@ -95,13 +114,19 @@ function addStrategy()
         });
    }
 
+   // Add new prisoner to page.
    var prisonerName = addPrisoner(newId, div.getElementsByTagName("select")[0]);
 
+   // Update prisoner name next to select box.
    div.getElementsByTagName("span")[0].innerHTML = prisonerName;
 }
 
-function removeStrategy(removeButton)
-{
+/**
+* Remove strategy from page.
+* @param removeButton - Clicked button.
+*/
+function removeStrategy(removeButton) {
+	
     let strategyDiv = removeButton.closest(".iteration-strategy");
 	let selectElement = strategyDiv.getElementsByTagName("select")[0];
 
@@ -110,6 +135,7 @@ function removeStrategy(removeButton)
         strategyDiv.remove();
     }
 
+	// Delete prisoner + remove his id from array of used ids.
 	deletePrisoner(selectElement.id);
 	idSelects.splice(selectElement.id, 1);
 }
