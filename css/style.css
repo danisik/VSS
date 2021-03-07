@@ -2,6 +2,7 @@
   margin-top: 40px;
   margin-left: 40px;
   margin-right: 40px;
+  margin-bottom: 70px;
 }
 
 #strategy-select {
@@ -150,4 +151,17 @@
 .prisoner-name {
     padding-right: 10px;
     margin-top: 5px;
+}
+
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #A0A0A0;
+  color: white;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
