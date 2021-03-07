@@ -1,0 +1,18 @@
+\select@language {czech}
+\contentsline {section}{\numberline {1}Zad\IeC {\'a}n\IeC {\'\i }}{2}{section.2}
+\contentsline {section}{\numberline {2}V\IeC {\v e}z\IeC {\v n}ovo dilema}{2}{section.3}
+\contentsline {section}{\numberline {3}\IeC {\v R}e\IeC {\v s}en\IeC {\'\i }}{3}{section.4}
+\contentsline {subsection}{\numberline {3.1}Strategie}{3}{subsection.5}
+\contentsline {subsection}{\numberline {3.2}Domovsk\IeC {\'a} str\IeC {\'a}nka}{4}{subsection.6}
+\contentsline {subsection}{\numberline {3.3}Z\IeC {\'a}kladn\IeC {\'\i } porovn\IeC {\'a}n\IeC {\'\i } dvou strategi\IeC {\'\i }}{4}{subsection.7}
+\contentsline {subsection}{\numberline {3.4}Porovn\IeC {\'a}n\IeC {\'\i } v\IeC {\'\i }ce strategi\IeC {\'\i }}{5}{subsection.9}
+\contentsline {section}{\numberline {4}Implementace}{6}{section.11}
+\contentsline {subsection}{\numberline {4.1}Jednotliv\IeC {\'e} strategie}{6}{subsection.12}
+\contentsline {subsection}{\numberline {4.2}Porovn\IeC {\'a}n\IeC {\'\i } v\IeC {\'\i }ce algoritm\IeC {\r u} - v\IeC {\'y}b\IeC {\v e}r protivn\IeC {\'\i }k\IeC {\r u}}{6}{subsection.13}
+\contentsline {subsection}{\numberline {4.3}Ru\IeC {\v s}en\IeC {\'\i }}{6}{subsection.14}
+\contentsline {subsection}{\numberline {4.4}Mutace}{6}{subsection.15}
+\contentsline {subsection}{\numberline {4.5}Pamatov\IeC {\'a}n\IeC {\'\i } minul\IeC {\'y}ch her}{6}{subsection.16}
+\contentsline {subsection}{\numberline {4.6}Grafy}{7}{subsection.17}
+\contentsline {section}{\numberline {5}Struktura soubor\IeC {\r u}}{7}{section.18}
+\contentsline {section}{\numberline {6}Licence}{8}{section.19}
+\contentsline {section}{\numberline {7}Z\IeC {\'a}v\IeC {\v e}r}{8}{section.20}

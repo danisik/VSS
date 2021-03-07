@@ -27,14 +27,14 @@ var loop = 0;
 * Add event listener to visualize button.
 */
 document.addEventListener("DOMContentLoaded", function(event) {
-	
+
 			document.getElementById("vizualize-btn").addEventListener('click', function(e) {
-				
+
 					e.preventDefault();
 					prisonersDilemma();
 
 					disableButton();
-			})
+			});
 });
 
 
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function prisonersDilemma() {
 
 	var oldRememberHistory = rememberHistory;
-	
+
 	// Get inputs from elements.
 	iterations = document.getElementById("iterations").value;
 	interference = document.getElementById('inteference').value;
@@ -84,44 +84,44 @@ function prisonersDilemma() {
 */
 function runGame() {
 
-		setTimeout(function() {					
+		setTimeout(function() {
 
 			var indexes = [ ];
-		
+
 			// Push available indexes for prisoners.
 			for (let i = 0; i < prisoners.length; i++) {
-				
+
 				indexes.push(i);
 			}
-			
+
 			// Create random pairs and run simulation between them.
 			while(true) {
-				
+
 				// Get random index from possible indexes.
-				var firstRandomIndex = Math.floor(Math.random() * indexes.length);							
-				
+				var firstRandomIndex = Math.floor(Math.random() * indexes.length);
+
 				// Get index to array of prisoners.
 				var firstIndex = indexes[firstRandomIndex];
-				
+
 				// Remove this index from possible indexes.
-				indexes.splice(indexes.indexOf(firstIndex), 1);		
-				
+				indexes.splice(indexes.indexOf(firstIndex), 1);
+
 				// Do the same for second prisoner.
-				var secondRandomIndex = Math.floor(Math.random() * indexes.length);				
-				var secondIndex = indexes[secondRandomIndex];	
+				var secondRandomIndex = Math.floor(Math.random() * indexes.length);
+				var secondIndex = indexes[secondRandomIndex];
 
 				// Check odd prisoner.
 				if (secondIndex == undefined) {
-					
+
 					break;
-				}				
-				indexes.splice(indexes.indexOf(secondIndex), 1);								
-							
+				}
+				indexes.splice(indexes.indexOf(secondIndex), 1);
+
 				// Run simulation between both prisoners.
 				prisonersDilemmaCalculate(prisoners[firstIndex], prisoners[secondIndex], interference);
-				
+
 				if (indexes.length == 0) {
-					
+
 					break;
 				}
 			}
@@ -150,7 +150,7 @@ function runGame() {
 					}
 				}
 				else {
-					
+
 					enableButton();
 				}
 			}
@@ -224,9 +224,9 @@ function doMutation() {
 
 	} else {
 
-		// If not, repeat the mutation.		
+		// If not, repeat the mutation.
 		repeatMutation = true;
-		
+
 		// Also, for the last prisoner, set new algorithm, which is algorithm used for first prisoner.
 		lastPrisoner.setAlgorithm(firstPrisoner.algorithmName);
 
@@ -246,9 +246,9 @@ function doMutation() {
 * Get time for pause between iterations.
 */
 function getSpeed() {
-	
+
 		switch (speed) {
-			
+
 			case "0":
 				return 500;
 				break;
@@ -267,7 +267,7 @@ function getSpeed() {
 * Update both graphs.
 */
 function updateGraphs() {
-	
+
 		updatePoints();
 		updateRepresentation();
 }
@@ -276,7 +276,7 @@ function updateGraphs() {
 * Initialize both graphs.
 */
 function initGraphs() {
-	
+
 		initPointsGraph();
 		initRepresentationGraph();
 
@@ -287,9 +287,9 @@ function initGraphs() {
 * Initialize graph with scores.
 */
 function initPointsGraph() {
-	
+
 		if (chartPoints) {
-			
+
 			 chartPoints.destroy();
 		}
 
@@ -300,7 +300,7 @@ function initPointsGraph() {
 		var labels = [];
 
 		for (i = 0 ; i < prisoners.length ; i++) {
-			
+
 				let prisoner = prisoners[i];
 
 				backgroundColor[i] = prisoner.backgroundColor;
@@ -315,13 +315,15 @@ function initPointsGraph() {
 		chartPoints.update();
 }
 
+
+
 /**
 * Initialize graph with algorithm representation count.
 */
 function initRepresentationGraph() {
-	
+
 		if (chartStrategies) {
-			
+
 				chartStrategies.destroy();
 		}
 
@@ -332,12 +334,12 @@ function initRepresentationGraph() {
 		var labels = {};
 
 		for (i = 0 ; i < prisoners.length ; i++) {
-			
+
 				let prisoner = prisoners[i];
 				let key = prisoner.algorithmName;
 
 				if (!labels[key]) {
-					
+
 						backgroundColor[key] = prisoner.backgroundColor;
 						borderColor[key] = prisoner.borderColor;
 						labels[key] = key;
@@ -362,7 +364,7 @@ function initGraph(element, title) {
 		let chartDOM = document.getElementById(element);
 
 		return new Chart(chartDOM, {
-			
+
 		    type: 'bar',
 		    data: {
 		        datasets: [{
@@ -386,11 +388,11 @@ function initGraph(element, title) {
 * Update scores in graph.
 */
 function updatePoints() {
-	
+
 		var values = [];
 
 		for (i = 0 ; i < prisoners.length ; i++) {
-			
+
 				let prisoner = prisoners[i];
 
 				values[i] = prisoner.score;
@@ -405,16 +407,16 @@ function updatePoints() {
 * Update algorithm representation count in graph.
 */
 function updateRepresentation() {
-	
+
 	var values = {};
 
 	for (i = 0 ; i < prisoners.length ; i++) {
-		
+
 			let prisoner = prisoners[i];
 			let key = prisoner.algorithmName;
 
 			if (values[key]) {
-				
+
 					values[key] += 1;
 			}
 			else {
@@ -439,7 +441,7 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, interference) {
 
 	// Get history between those two prisoners.
 	var P1P2HistoryCount = prisoner1.history.has(prisoner2.id) ? prisoner1.history.get(prisoner2.id).length : 0;
-	
+
 	// Calculate how many betrays are there between prisoner1 and prisoner2.
 	var P1BetraysP2Count = prisoner2.getTypeCount(prisoner1.id, true);
 	var P2BetraysP1Count = prisoner1.getTypeCount(prisoner2.id, true);
@@ -467,16 +469,16 @@ function prisonersDilemmaCalculate(prisoner1, prisoner2, interference) {
 	}
 
 	// Get random number for interference.
-	var interferenceRandomNumber1 = Math.random().toFixed(2);
-	var interferenceRandomNumber2 = Math.random().toFixed(2);
+	var interferenceRandomNumber1 = Math.floor(Math.random() * 100);
+	var interferenceRandomNumber2 = Math.floor(Math.random() * 100);
 
 	// Try to change choice again using interference.
-	if (interferenceRandomNumber1 > (1 - interference)) {
+	if (interferenceRandomNumber1 > (100 - interference)) {
 
 		statePrisoner1 = !statePrisoner1;
 	}
 
-	if (interferenceRandomNumber2 > (1 - interference)) {
+	if (interferenceRandomNumber2 > (100 - interference)) {
 
 		statePrisoner2 = !statePrisoner2;
 	}

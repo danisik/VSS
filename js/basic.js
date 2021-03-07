@@ -4,7 +4,7 @@
  * The author dedicates this file to the public domain.
  */
 
- 
+
 var tmpHistory1 = [ ];
 var tmpHistory2 = [ ];
 
@@ -23,7 +23,7 @@ var i = 0;
 document.addEventListener("DOMContentLoaded", function(event) {
 
 			document.getElementById("vizualize-btn").addEventListener('click', function(e) {
-				
+
 					e.preventDefault();
 					prisonersDilemma();
 
@@ -41,9 +41,9 @@ function prisonersDilemma() {
 	// Create prisoners from selected strategies.
 	var prisoner1 = new Prisoner(0, document.getElementById("strategy-1"));
 	var prisoner2 = new Prisoner(1, document.getElementById("strategy-2"));
-	
+
 	// Actualize their used algorithms.
-	prisoner1.actualizeAlgorithm();	
+	prisoner1.actualizeAlgorithm();
 	prisoner2.actualizeAlgorithm();
 
 	i = 0;
@@ -90,7 +90,7 @@ function updateTotalScore(prisoner1, prisoner2) {
 * @param prisoner2 - Second prisoner.
 */
 function runGame(prisoner1, prisoner2) {
-	
+
 		setTimeout(function() {
 
 				// Get current choices of prisoners.
@@ -150,11 +150,11 @@ function runGame(prisoner1, prisoner2) {
 
 
 	    if (i < iterations) {           //  if the counter < 10, call the loop function
-		
+
 	      runGame(prisoner1, prisoner2);             //  ..  again which will trigger another
 	    }                       //  ..  setTimeout()
 			else {
-				
+
 				enableButton();
 			}
 	  }, 100);
@@ -167,18 +167,18 @@ function runGame(prisoner1, prisoner2) {
 * @param state - Current choice of prisoner.
 */
 function getDataForPrisonerCell(prisoner, state) {
-	
+
 		var data = document.createElement("span");
 
 		var img = document.createElement('img');
 		img.classList.add("result-img");
 
 		if (state) {
-			
-				img.src = "img/snitch.png"
+
+				img.src = "img/bro.png"
 		}
 		else {
-				img.src = "img/bro.png"
+				img.src = "img/snitch.png"
 		}
 
 		var totalScore = document.createElement("text");
@@ -198,11 +198,11 @@ function getDataForPrisonerCell(prisoner, state) {
 * Show results in table.
 */
 function showResults() {
-	
+
 		let table = document.getElementById("game-result");
 
 		if (table) {
-			
+
 				table.classList.remove("hidden");
 		}
 }
@@ -211,11 +211,11 @@ function showResults() {
 * Hide results in table.
 */
 function hideTable() {
-	
+
 		let table = document.getElementById("game-result");
 
 		if (table) {
-			
+
 				table.classList.add("hidden");
 		}
 }

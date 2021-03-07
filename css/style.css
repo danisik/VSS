@@ -18,8 +18,9 @@
   text-transform: uppercase;
 }
 
-#iterations {
-
+#note-text {
+    font-style: italic;
+    font-size: 15px;
 }
 
 .iterations-basic {

@@ -9,11 +9,7 @@
 	<link rel="stylesheet" href="css/Chart.min.css">
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/moment.js"></script>
 	<script type="text/javascript" src="js/Chart.min.js"></script>
-
-
-
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -79,13 +75,15 @@
 
 				<button type="button" class="btn btn-primary" id="vizualize-btn">Visualize!</button>
 			</div>
-			</div>
-
 		</div>
+		<div class="center-content margin-top">
+					<span id="note-text">* The prisonner with the lowest score wins (number of years in prison).</span>
+		</div>
+	</div>
 
 
 
-		<div class="charts">
+		<div class="charts" class="hidden">
 			<div class="chart-points-wrapper chart">
 					<canvas id="chart-points" width="700" height="400"></canvas>
 			</div>

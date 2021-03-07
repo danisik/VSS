@@ -4,7 +4,7 @@
  * The author dedicates this file to the public domain.
  */
 
- 
+
 var idSelects = [ ];
 
 /**
@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       initAddStrategyButton();
       initRemoveStrategyButton();
 });
-
 
 /**
 * Initialize button event for adding new strategies to page.
@@ -40,7 +39,7 @@ function initRemoveStrategyButton() {
     var removeButtons = document.getElementsByClassName("delete-btn");
 
     Array.from(removeButtons).forEach(function(removeButton) {
-		  
+
           removeButton.addEventListener('click', function() {
           removeStrategy(removeButton);
         });
@@ -51,7 +50,7 @@ function initRemoveStrategyButton() {
 /**
 * Adding new strategy.
 */
-function addStrategy() {
+function addStrategy(strategy = null) {
 	let newId = 0;
 
 	// Try to find id for new prisoner.
@@ -107,7 +106,7 @@ function addStrategy() {
 
    // Get remove button if exists and add event listener for removing current prisoner.
    var removeButton = div.getElementsByTagName("button")[0];
-   
+
    if (removeButton != null) {
 	   removeButton.addEventListener('click', function() {
           removeStrategy(removeButton);
@@ -126,7 +125,7 @@ function addStrategy() {
 * @param removeButton - Clicked button.
 */
 function removeStrategy(removeButton) {
-	
+
     let strategyDiv = removeButton.closest(".iteration-strategy");
 	let selectElement = strategyDiv.getElementsByTagName("select")[0];
 
